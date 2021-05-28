@@ -35,7 +35,7 @@
 const $ = new Env("京喜财富岛提现");
 const JD_API_HOST = "https://m.jingxi.com/";
 const jdCookieNode = $.isNode() ? require("../scripts/jdCookie.js") : "";
-#const jdTokenNode = $.isNode() ? require('./jdJxncTokens.js') : '';
+// const jdTokenNode = $.isNode() ? require('./jdJxncTokens.js') : '';
 $.cookieArr = [];
 $.tokenArr = [{"farm_jstoken":"5dad0712d17d7a086ad7b7445a9666a8","phoneid":"3636d114be09065903a87cac850664cfa6d22727","timestamp":"1621602130420","pin":"jd_QHcpFcPfKVzJ"},{"farm_jstoken":"459ba9319b69e08848bb647da587724f","phoneid":"3636d114be09065903a87cac850664cfa6d22727","timestamp":"1621266056975","pin":"ZYJ20200"}];
 let concurrency = 9 // 并发数
