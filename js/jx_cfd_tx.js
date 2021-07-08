@@ -33,13 +33,14 @@
 **/
 
 const $ = new Env("京喜财富岛提现");
+const notify = $.isNode() ? require('./sendNotify') : '';
 const JD_API_HOST = "https://m.jingxi.com/";
 const jdCookieNode = $.isNode() ? require("../scripts/jdCookie.js") : "";
 // const jdTokenNode = $.isNode() ? require('./jdJxncTokens.js') : '';
 $.cookieArr = [];
 $.tokenArr = [{"farm_jstoken":"5dad0712d17d7a086ad7b7445a9666a8","phoneid":"3636d114be09065903a87cac850664cfa6d22727","timestamp":"1621602130420","pin":"jd_QHcpFcPfKVzJ"},{"farm_jstoken":"459ba9319b69e08848bb647da587724f","phoneid":"3636d114be09065903a87cac850664cfa6d22727","timestamp":"1621266056975","pin":"ZYJ20200"}];
 let concurrency = 9 // 并发数
-
+let allMessage = ''
 !(async () => {
   if (!getCookies()) return;
   let execAcList = getExecAcList()
@@ -50,6 +51,7 @@ let concurrency = 9 // 并发数
       let allAc = arr.map(ac => ac.no).join(', ')
       $.log(`\n=======================================\n开始【${$.name}账号：${allAc}】`)
       let rtList = await Promise.all(arr.map((ac, i) => cashOut(ac, i)))
+      allMessage += rtList.map(ac => `【账号${ac.no}】${ac.tk['pin']||''}${ac.result?'\n\t'+ac.result:''}`).join('\n\n')
       msgInfo.push(rtList.map(ac => `【账号${ac.no}】${ac.tk['pin']||''}${ac.result?'\n\t'+ac.result:''}`).join('\n\n'))
     }
     retry = ['23:59:59','00:00:00'].includes($.time('HH:mm:ss'))
@@ -61,6 +63,7 @@ let concurrency = 9 // 并发数
     msgInfo.push(`暂无京喜token数据，请抓取后再试`)
   }
   $.msg($.name, '', msgInfo.join('\n\n'))
+  await notify.sendNotify(`${$.name}`, `${allMessage}`)
 })()
   .catch((e) => $.logErr(e))
   .finally(() => $.done());
