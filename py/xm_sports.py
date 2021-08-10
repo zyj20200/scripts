@@ -296,7 +296,7 @@ if __name__ ==  "__main__":
     # 登录密码
     passwd = "qPxhuqowt3syXE"
     # 要修改的步数，直接输入想要修改的步数值，留空为随机步数
-    step ="要修改的步数建议区间例如20000-30000"
+    step ="20000-23000"
  
     user_list = user.split('#')
     passwd_list = passwd.split('#')
