@@ -1,6 +1,21 @@
 # -*- coding: utf8 -*-
 # python版本 >=3.8
- 
+
+"""
+添加环境变量
+export XM_SPORT_INFO="账号1;密码1&账号2;密码2"
+
+tg推送环境变量
+TG_BOT_TOKEN
+TG_USER_ID
+TG_PROXY_HOST
+TG_PROXY_IP
+TG_PROXY_PORT
+TG_API_HOST
+"""
+
+import os
+import traceback
 import requests,time,re,json,random
  
 now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
@@ -184,7 +199,52 @@ def push_pushplus(token, content=""):
             print(f"[{now}] 推送成功。")
         else:
             print(f"[{now}] 推送失败：{json_data['code']}({json_data['message']})")
- 
+
+
+# tg通知
+def push_tg2(title, content):
+    import os
+    TG_BOT_TOKEN = os.getenv('TG_BOT_TOKEN')
+    TG_USER_ID = os.getenv('TG_USER_ID')
+    TG_PROXY_HOST = os.getenv('TG_PROXY_HOST')
+    TG_PROXY_IP = os.getenv('TG_PROXY_IP')
+    TG_PROXY_PORT = os.getenv('TG_PROXY_PORT')
+    TG_API_HOST = os.getenv('TG_API_HOST')
+    try:
+        print("\n")
+        bot_token = TG_BOT_TOKEN
+        user_id = TG_USER_ID
+        if not bot_token or not user_id:
+            print("tg服务的bot_token或者user_id未设置!!\n取消推送")
+            return
+        print("tg服务启动")
+        if TG_API_HOST:
+            url = f"{TG_API_HOST}/bot{TG_BOT_TOKEN}/sendMessage"
+        else:
+            url = f"https://api.telegram.org/bot{TG_BOT_TOKEN}/sendMessage"
+
+        headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+        payload = {'chat_id': str(TG_USER_ID), 'text': f'{title}\n\n{content}', 'disable_web_page_preview': 'true'}
+        proxies = None
+        if TG_PROXY_IP and TG_PROXY_PORT:
+            proxyStr = "http://{}:{}".format(TG_PROXY_IP, TG_PROXY_PORT)
+            proxies = {"http": proxyStr, "https": proxyStr}
+        try:
+            print(payload)
+            response = requests.post(url=url, headers=headers, params=payload, proxies=proxies).json()
+        except:
+            print('推送失败1111！')
+            traceback.print_exc()
+
+        if response['ok']:
+            print('推送成功！')
+        else:
+            print('推送失败2222！')
+            traceback.print_exc()
+    except Exception as e:
+        print(e)
+
+
 # 推送tg
 def push_tg(token, chat_id, desp=""):
     """
@@ -264,18 +324,20 @@ def wxpush(msg, usr, corpid, corpsecret, agentid=1000002):
         send_message(msg, usr)
  
 if __name__ ==  "__main__":
+    print(f"=============== {time.ctime()} ===============")
     # Push Mode
-    Pm = "off"
+    Pm = "tg"
     if Pm == 'wx' or Pm == 'nwx':
         # ServerChan
         sckey = input()
         if str(sckey) == '0':
             sckey = ''
     elif Pm == 'tg':
-        token = input()
-        sl = token.split('@')
-        if len(sl) != 2:
-            print('tg推送参数有误！')
+        pass
+        # token = input()
+        # sl = token.split('@')
+        # if len(sl) != 2:
+        #     print('tg推送参数有误！')
     elif Pm == 'qwx':
         token = input()
         sl = token.split('-')
@@ -290,16 +352,25 @@ if __name__ ==  "__main__":
     else:
         print('推送选项有误！')
         exit(0)
- 
-    # 用户名（格式为 1**********）
-    user = "15800909237"
-    # 登录密码
-    passwd = "qPxhuqowt3syXE"
+    ################################################### 方式一
+    # # 用户名（格式为 1**********）
+    # user = "123456789"
+    # # 登录密码
+    # passwd = "123456789"
+    # user_list = user.split('#')
+    # passwd_list = passwd.split('#')
+
+    ################################################### 方式二
+    user_list = []
+    passwd_list = []
+    user_info_list = os.getenv('XM_SPORT_INFO').split('&')     ## "账号1;密码1&账号2;密码2"
+    for u in user_info_list:
+        user_list.append(u.split(';')[0])
+        passwd_list.append(u.split(';')[1])
+
+
     # 要修改的步数，直接输入想要修改的步数值，留空为随机步数
     step ="20000-23000"
- 
-    user_list = user.split('#')
-    passwd_list = passwd.split('#')
     setp_array = step.split('-')
  
     if len(user_list) == len(passwd_list):
@@ -316,7 +387,8 @@ if __name__ ==  "__main__":
         elif Pm == 'nwx':
             push_server(sckey, push)
         elif Pm == 'tg':
-            push_tg(sl[0], sl[1], push)
+            # push_tg(sl[0], sl[1], push)
+            push_tg2("小米运动", push)
         elif Pm == 'qwx':
             if len(sl) == 4:
                 wxpush(push, sl[0], sl[1], sl[2], int(sl[3]))
