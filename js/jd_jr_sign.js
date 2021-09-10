@@ -36,16 +36,18 @@ const cookiesKey = 'cookies';
 const bodyKey = 'bodys';
 let cookies, bodys;
 
-// if ($.env.isNode) {
-//   cookies = $.read(cookiesKey) || [];
-//   bodys = $.read(bodyKey) || {};
-// } else {
+if ($.env.isNode) {
+  cookies = $.read(cookiesKey) || [];
+  bodys = $.read(bodyKey) || {};
+} else {
 //   cookies = JSON.parse($.read(cookiesKey) || '[]');
 //   bodys = JSON.parse($.read(bodyKey) || '{}');
-// }
+  cookies = JSON.parse(process.env.JD_JX_SIGN_COOKIE || '[]');
+  bodys = JSON.parse(process.env.JD_JX_SIGN_BODY || '{}');
+}
 
-let cookies = JSON.parse(process.env.JD_JX_SIGN_COOKIE || '[]');
-let bodys = JSON.parse(process.env.JD_JX_SIGN_BODY || '{}');
+// let cookies = JSON.parse(process.env.JD_JX_SIGN_COOKIE || '[]');
+// let bodys = JSON.parse(process.env.JD_JX_SIGN_BODY || '{}');
 
 const account = cookies.map((item) => ({...item, body: bodys[item.username]})).
   filter((item) => !!item.phoneNumber);
