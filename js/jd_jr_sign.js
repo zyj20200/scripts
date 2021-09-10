@@ -36,13 +36,13 @@ const cookiesKey = 'cookies';
 const bodyKey = 'bodys';
 let cookies, bodys;
 
-if ($.env.isNode) {
-  cookies = $.read(cookiesKey) || [];
-  bodys = $.read(bodyKey) || {};
-} else {
-  cookies = JSON.parse($.read(cookiesKey) || '[]');
-  bodys = JSON.parse($.read(bodyKey) || '{}');
-}
+// if ($.env.isNode) {
+//   cookies = $.read(cookiesKey) || [];
+//   bodys = $.read(bodyKey) || {};
+// } else {
+//   cookies = JSON.parse($.read(cookiesKey) || '[]');
+//   bodys = JSON.parse($.read(bodyKey) || '{}');
+// }
 
 let cookies = JSON.parse(process.env.JD_JX_SIGN_COOKIE || '[]');
 let bodys = JSON.parse(process.env.JD_JX_SIGN_BODY || '{}');
