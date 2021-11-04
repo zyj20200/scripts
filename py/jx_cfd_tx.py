@@ -157,7 +157,7 @@ def run(cookie, cfd_tx_money):
     print(cookie.split(";")[1])
     print(response_str)
     if "strName" in response_str:
-        send(cookie.split(";")[1], response_str)
+        wecom_app(cookie.split(";")[1], response_str)
 
     
 
