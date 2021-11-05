@@ -18,3 +18,8 @@
 
 # Thanks
 [yichahucha](https://github.com/yichahucha/surge/tree/master)
+[wuye999](https://github.com/wuye999/myScripts)
+
+[KingRan](https://github.com/KingRan/JDJB)
+
+[NobyDa](https://github.com/NobyDa/Script)
