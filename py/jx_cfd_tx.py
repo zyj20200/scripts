@@ -213,21 +213,23 @@ ua = random.choice(USER_AGENTS)
 cfd_get_num = 2
 ## 提现金额
 cfd_tx_money = os.getenv('cfd_tx_money')
-## 不跑脚本用户
-cfd_tx_pass_pin = os.getenv('cfd_tx_pass_pin', "").split("&")
+## 跑脚本用户
+cfd_tx_run_pin = os.getenv('cfd_tx_run_pin', "").split("&")
 ## 获取cookie
 cks = get_cks()
-## 剔除cookie
-if cfd_tx_pass_pin[0] != "":
-  for i in cfd_tx_pass_pin:
+## 跑脚本的ck
+run_cks = []
+
+if cfd_tx_run_pin[0] != "":
+  for i in cfd_tx_run_pin:
       for j in cks:
           if i in j:
-              cks.remove(j)
+              run_cks.append(j)
               break
 
 thread_list = []
 for i in range(cfd_get_num):
-  for cookie in cks:
+  for cookie in run_cks:
       thread_cfd = threading.Thread(target=run, args=(cookie, cfd_tx_money))
       thread_list.append(thread_cfd)
 for t in thread_list:
