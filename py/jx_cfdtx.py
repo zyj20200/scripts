@@ -121,15 +121,16 @@ def get_msg(response):
     print(datetime.datetime.now(), msg)
 
 def get_url(cfd_tx_money):
-    dwLvl,ddwPaperMoney = get_tx_code(cfd_tx_money)
-    now_str = "".join(datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S-%f').split("-"))[:-3]
-    url = "https://m.jingxi.com/jxbfd/user/ExchangePrize?strZone=jxbfd&bizCode=jxbfd&source=jxbfd&dwEnv=7&_cfd_t={}"\
-        "&ptag=7155.9.47&dwType=3&dwLvl={}&ddwPaperMoney={}&strPoolName=jxcfd2_exchange_hb_202111&strPgtimestamp={}&"\
-        "strPhoneID=3636d114be09065903a87cac850664cfa6d22727&strPgUUNum=cff01be11c4a4129e33deb03100901f0&"\
-        "_stk=_cfd_t%2CbizCode%2CddwPaperMoney%2CdwEnv%2CdwLvl%2CdwType%2Cptag%2Csource%2CstrPgUUNum%2CstrPgtimestamp%2CstrPhoneID%2CstrPoolName%2CstrZone&"\
-        "_ste=1&h5st={}%3B1238631108179162%3B10032%3Btk01wc9c71d4730n4jYtF4cdKYvFjoZoeAm0w2vr0aXASaCbXDglkXQ7wvakIOqBTDNERhtcdUcCtrsq1"\
-        "iMv6Zkdu%2FQe%3Bfde2d1e0f4e3a6e31d22ccd8ac15429cf41465462a392e4e70af1f1a6c91c5e2&"\
-        "_=1636004948570&sceneval=2&g_login_type=1&callback=jsonpCBKI&g_ty=ls".format(int(time.time()*1000)-2, dwLvl, ddwPaperMoney, int(time.time()*1000), now_str)
+#     dwLvl,ddwPaperMoney = get_tx_code(cfd_tx_money)
+#     now_str = "".join(datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S-%f').split("-"))[:-3]
+#     url = "https://m.jingxi.com/jxbfd/user/ExchangePrize?strZone=jxbfd&bizCode=jxbfd&source=jxbfd&dwEnv=7&_cfd_t={}"\
+#         "&ptag=7155.9.47&dwType=3&dwLvl={}&ddwPaperMoney={}&strPoolName=jxcfd2_exchange_hb_202111&strPgtimestamp={}&"\
+#         "strPhoneID=3636d114be09065903a87cac850664cfa6d22727&strPgUUNum=cff01be11c4a4129e33deb03100901f0&"\
+#         "_stk=_cfd_t%2CbizCode%2CddwPaperMoney%2CdwEnv%2CdwLvl%2CdwType%2Cptag%2Csource%2CstrPgUUNum%2CstrPgtimestamp%2CstrPhoneID%2CstrPoolName%2CstrZone&"\
+#         "_ste=1&h5st={}%3B1238631108179162%3B10032%3Btk01wc9c71d4730n4jYtF4cdKYvFjoZoeAm0w2vr0aXASaCbXDglkXQ7wvakIOqBTDNERhtcdUcCtrsq1"\
+#         "iMv6Zkdu%2FQe%3Bfde2d1e0f4e3a6e31d22ccd8ac15429cf41465462a392e4e70af1f1a6c91c5e2&"\
+#         "_=1636004948570&sceneval=2&g_login_type=1&callback=jsonpCBKI&g_ty=ls".format(int(time.time()*1000)-2, dwLvl, ddwPaperMoney, int(time.time()*1000), now_str)
+    url = "https://m.jingxi.com/jxbfd/user/ExchangePrize?strZone=jxbfd&ddwPaperMoney=100000&strPoolName=jxcfd2_exchange_hb_202112&sceneval=2&dwType=3&dwLvl=11"
     return url
 
 def get_tx_code(cfd_tx_money):
@@ -210,7 +211,7 @@ pt_pin_to_mark_name = {"pt_pin=ZYJ20200":"zz", "pt_pin=jd_QHcpFcPfKVzJ":"zz22", 
 ua = random.choice(USER_AGENTS)
 
 ## 请求次数
-cfd_get_num = 2
+cfd_get_num = 1
 ## 提现金额
 cfd_tx_money = os.getenv('cfd_tx_money')
 ## 跑脚本用户
