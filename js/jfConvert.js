@@ -1,6 +1,11 @@
 /*
-README：https://github.com/yichahucha/surge/tree/master
-^https?://api\.m\.jd\.com/(client\.action|api)\?functionId=(wareBusiness|serverConfig|basicConfig|lite_wareBusiness|pingou_item)
+https://raw.githubusercontent.com/Tartarus2014/Script/master/jf_Convert.js
+
+Loon/Surge:
+http-response ^https?://api\.m\.jd\.com/(client\.action|api)\?functionId=(wareBusiness|serverConfig|basicConfig|lite_wareBusiness|pingou_item) script-path=https://raw.githubusercontent.com/Tartarus2014/Script/master/jf_Convert.js, requires-body=true, timeout=10, tag=京粉转链
+
+qx:
+^https?://api\.m\.jd\.com/(client\.action|api)\?functionId=(wareBusiness|serverConfig|basicConfig|lite_wareBusiness|pingou_item) url script-response-body https://raw.githubusercontent.com/Tartarus2014/Script/master/jf_Convert.js
  */
 
 const path1 = "serverConfig";
@@ -234,6 +239,7 @@ function dateFormat(cellval) {
 function tool() {
     const isSurge = typeof $httpClient != "undefined";
     const isQuanX = typeof $task != "undefined";
+    const isLoon = typeof $loon != "undefined";
     const node = (() => {
         if (typeof require == "function") {
             const request = require("request");
@@ -243,7 +249,7 @@ function tool() {
         }
     })();
     const notify = (title, subtitle, content, open_url) => {
-        if (isSurge) {
+        if (isSurge && !isLoon) {
             let opts = {};
             if (open_url) opts["url"] = open_url;
             if (JSON.stringify(opts) == "{}") {
