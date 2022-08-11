@@ -1,0 +1,20 @@
+#!name= 微信去广告
+#!desc=移除微信广告。
+#!icon=https://raw.githubusercontent.com/zyj20200/scripts/main/img/wechat.jpeg
+
+[Script]
+http-response ^https?:\/\/mp\.weixin\.qq\.com\/mp\/getappmsgad script-path=https://hub.qste.com/Script/WeChat/WeChat.js, requires-body=true, timeout=10, tag=微信公众号广告
+
+[URL Rewrite]
+
+# > Tencent WeChat - mp.weixin.qq.com
+# ^https?:\/\/mp\.weixin\.qq\.com\/mp\/(ad_|advertisement) - reject
+
+# > 微信
+^https?:\/\/resstatic\.servicewechat\.com\/weapp\/release_ - reject
+^https?:\/\/wxsnsdythumb\.wxs\.qq\.com\/.+\/snscosdownload\/SZ\/reserved - reject
+^https?:\/\/dlied(.*).cdntips.net - reject
+^https?+:\/\/mp\.weixin\.qq\.com\/mp\/(?>ad_|advertisement|getappmsgad) - reject
+
+[MITM]
+hostname = mp.weixin.qq.com
