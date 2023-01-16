@@ -1,3 +1,6 @@
+#!name=WeiboInteNoAD
+#!desc=微博国际版去广告
+
 [Script]
 weiboInternetNoAD = type=http-response,pattern=^https?:\/\/m?api\.weibo\.c(n|om)\/\d\/\w{5}\/cardlist,requires-body=1,max-size=0,script-path=https://github.com/ddgksf2013/Scripts/raw/master/weibo_json.js
 weiboInternetNoAD = type=http-response,pattern=^https://api.weibo.cn/2/!/client/light_skin,requires-body=1,max-size=0,script-path=https://github.com/ddgksf2013/Scripts/raw/master/weibo_json.js
