@@ -85,3 +85,13 @@ DOMAIN,sg1.jmsooo.com
 DOMAIN,sg2.jmsooo.com
 DOMAIN,usa1.jmsooo.com
 DOMAIN,usa2.jmsooo.com
+
+# > Nebula
+DOMAIN,direct.nebula-emby.com
+
+# > MisakaF
+DOMAIN,cf2.misakaf.org
+
+# > 垃圾影音
+DOMAIN,11.loseremby.org
+DOMAIN,cf.emby.ml
